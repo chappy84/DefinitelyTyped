@@ -2,6 +2,7 @@ declare module "https" {
     import * as tls from "tls";
     import * as events from "events";
     import * as http from "http";
+    import { SocketConnectOpts } from "net";
     import { URL } from "url";
 
     type ServerOptions = tls.SecureContextOptions & tls.TlsOptions & http.ServerOptions;
@@ -16,9 +17,11 @@ declare module "https" {
         maxCachedSessions?: number;
     }
 
+    type AgentCombinedOptions = AgentOptions | (AgentOptions & SocketConnectOpts);
+
     class Agent extends http.Agent {
-        constructor(options?: AgentOptions);
-        options: AgentOptions;
+        constructor(options?: AgentCombinedOptions);
+        options: AgentCombinedOptions;
     }
 
     class Server extends tls.Server {

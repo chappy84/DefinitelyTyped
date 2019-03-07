@@ -2,7 +2,7 @@ declare module "http" {
     import * as events from "events";
     import * as stream from "stream";
     import { URL } from "url";
-    import { Socket, Server as NetServer } from "net";
+    import { Socket, SocketConnectOpts, Server as NetServer } from "net";
 
     // incoming headers will never contain number
     interface IncomingHttpHeaders {
@@ -239,7 +239,7 @@ declare module "http" {
             readonly [key: string]: IncomingMessage[];
         };
 
-        constructor(opts?: AgentOptions);
+        constructor(opts?: AgentOptions | (AgentOptions & SocketConnectOpts));
 
         /**
          * Destroy any sockets that are currently in use by the agent.

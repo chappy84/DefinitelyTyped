@@ -1176,7 +1176,7 @@ declare module "http" {
         sockets: any;
         requests: any;
 
-        constructor(opts?: AgentOptions);
+        constructor(opts?: AgentOptions | (AgentOptions & net.SocketConnectOpts));
 
         /**
          * Destroy any sockets that are currently in use by the agent.
@@ -1776,6 +1776,7 @@ declare module "https" {
     import * as tls from "tls";
     import * as events from "events";
     import * as http from "http";
+    import { SocketConnectOpts } from "net";
     import { URL } from "url";
 
     export type ServerOptions = tls.SecureContextOptions & tls.TlsOptions;
@@ -1798,9 +1799,11 @@ declare module "https" {
         maxCachedSessions?: number;
     }
 
+    type AgentCombinedOptions = AgentOptions | (AgentOptions & SocketConnectOpts);
+
     export class Agent extends http.Agent {
-        constructor(options?: AgentOptions);
-        options: AgentOptions;
+        constructor(options?: AgentCombinedOptions);
+        options: AgentCombinedOptions;
     }
 
     export class Server extends tls.Server {

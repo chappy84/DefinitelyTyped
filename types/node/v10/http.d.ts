@@ -235,7 +235,7 @@ declare module "http" {
         sockets: any;
         requests: any;
 
-        constructor(opts?: AgentOptions);
+        constructor(opts?: AgentOptions | (AgentOptions & net.SocketConnectOpts));
 
         /**
          * Destroy any sockets that are currently in use by the agent.
