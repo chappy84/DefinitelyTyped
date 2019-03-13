@@ -1465,6 +1465,46 @@ namespace http_tests {
     }
 
     {
+        var agent: http.Agent = new http.Agent({
+            keepAlive: true,
+            keepAliveMsecs: 10000,
+            maxSockets: Infinity,
+            maxFreeSockets: 256,
+            path: "/"
+        });
+
+        var agent: http.Agent = http.globalAgent;
+
+        http.request({ agent: false });
+        http.request({ agent });
+        http.request({ agent: undefined });
+    }
+
+    {
+        var agent: http.Agent = new http.Agent({
+            keepAlive: true,
+            keepAliveMsecs: 10000,
+            maxSockets: Infinity,
+            maxFreeSockets: 256,
+            family: 4,
+            hints: 0,
+            host: "localhost",
+            localAddress: "10.0.0.1",
+            localPort: 1234,
+            lookup: (_hostname: string, _options: dns.LookupOneOptions, _callback: (err: NodeJS.ErrnoException | null, address: string, family: number) => void): void => {
+                // nothing
+            },
+            port: 80
+        });
+
+        var agent: http.Agent = http.globalAgent;
+
+        http.request({ agent: false });
+        http.request({ agent });
+        http.request({ agent: undefined });
+    }
+
+    {
         http.request('http://www.example.com/xyz');
     }
 

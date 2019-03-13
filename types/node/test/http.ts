@@ -1,3 +1,5 @@
+// TypeScript Version: 2.2
+import { LookupOneOptions } from 'dns';
 import * as http from 'http';
 import * as url from 'url';
 import * as net from 'net';
@@ -131,6 +133,48 @@ import * as net from 'net';
         maxSockets: Infinity,
         maxFreeSockets: 256,
         timeout: 15000
+    });
+
+    agent = http.globalAgent;
+
+    http.request({ agent: false });
+    http.request({ agent });
+    http.request({ agent: undefined });
+}
+
+{
+    let agent: http.Agent = new http.Agent({
+        keepAlive: true,
+        keepAliveMsecs: 10000,
+        maxSockets: Infinity,
+        maxFreeSockets: 256,
+        timeout: 15000,
+        path: "/"
+    });
+
+    agent = http.globalAgent;
+
+    http.request({ agent: false });
+    http.request({ agent });
+    http.request({ agent: undefined });
+}
+
+{
+    let agent: http.Agent = new http.Agent({
+        keepAlive: true,
+        keepAliveMsecs: 10000,
+        maxSockets: Infinity,
+        maxFreeSockets: 256,
+        timeout: 15000,
+        family: 4,
+        hints: 0,
+        host: "localhost",
+        localAddress: "10.0.0.1",
+        localPort: 1234,
+        lookup: (_hostname: string, _options: LookupOneOptions, _callback: (err: NodeJS.ErrnoException | null, address: string, family: number) => void): void => {
+            // nothing
+        },
+        port: 80
     });
 
     agent = http.globalAgent;
